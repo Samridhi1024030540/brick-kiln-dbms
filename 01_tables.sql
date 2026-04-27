@@ -1,0 +1,85 @@
+-- DROP added to Remove all existing tables, Reset database to fresh state, Avoid hidden errors
+DROP TABLE Wage CASCADE CONSTRAINTS;
+DROP TABLE Shift CASCADE CONSTRAINTS;
+DROP TABLE Child CASCADE CONSTRAINTS;
+DROP TABLE Audit_Log CASCADE CONSTRAINTS;
+DROP TABLE Admin CASCADE CONSTRAINTS;
+DROP TABLE Kiln CASCADE CONSTRAINTS;
+DROP TABLE Migrant CASCADE CONSTRAINTS;
+
+-- TABLES CREATION:-
+
+-- MIGRANT TABLE
+CREATE TABLE Migrant (
+    migrant_id NUMBER PRIMARY KEY,
+    name VARCHAR2(50),
+    gender VARCHAR2(10),
+    state VARCHAR2(30),
+    home_district VARCHAR2(50),
+    aadhaar_no VARCHAR2(12) UNIQUE,
+    phone VARCHAR2(10),
+    registration_date DATE
+);
+
+-- KILN TABLE
+CREATE TABLE Kiln (
+    kiln_id NUMBER PRIMARY KEY,
+    location VARCHAR2(50),
+    owner_name VARCHAR2(50),
+    min_wage NUMBER
+);
+
+-- ADMIN TABLE
+CREATE TABLE Admin (
+    admin_id NUMBER PRIMARY KEY,
+    name VARCHAR2(50),
+    organization VARCHAR2(50),
+    role VARCHAR2(30)
+);
+
+-- CHILD TABLE
+CREATE TABLE Child (
+    child_id NUMBER PRIMARY KEY,
+    child_name VARCHAR2(50),
+    age NUMBER,
+    class_last_attended VARCHAR2(20),
+    school_name VARCHAR2(50),
+    enrollment_status VARCHAR2(20),
+    migrant_id NUMBER,
+    FOREIGN KEY (migrant_id) REFERENCES Migrant(migrant_id)
+);
+
+-- SHIFT TABLE
+CREATE TABLE Shift (
+    shift_id NUMBER PRIMARY KEY,
+    start_date DATE,
+    end_date DATE,
+    hours_worked NUMBER,
+    shift_type VARCHAR2(20),
+    migrant_id NUMBER,
+    kiln_id NUMBER,
+    FOREIGN KEY (migrant_id) REFERENCES Migrant(migrant_id),
+    FOREIGN KEY (kiln_id) REFERENCES Kiln(kiln_id)
+);
+
+-- WAGE TABLE
+CREATE TABLE Wage (
+    wage_id NUMBER PRIMARY KEY,
+    amount NUMBER,
+    advance_paid NUMBER,
+    balance_due NUMBER,
+    payment_status VARCHAR2(20),
+    shift_id NUMBER UNIQUE,
+    FOREIGN KEY (shift_id) REFERENCES Shift(shift_id)
+);
+
+-- AUDIT TABLE  
+CREATE TABLE Audit_log ( -- (couldn't name it as 'Audit' as that's a reserved keyword.)
+    audit_id NUMBER PRIMARY KEY,
+    audit_date DATE,
+    remarks VARCHAR2(100),
+    admin_id NUMBER,
+    kiln_id NUMBER,
+    FOREIGN KEY (admin_id) REFERENCES Admin(admin_id),
+    FOREIGN KEY (kiln_id) REFERENCES Kiln(kiln_id)
+);
