@@ -62,7 +62,7 @@ FOR i IN 1..300 LOOP
     INSERT INTO Shift VALUES (
         i,
         DATE '2026-04-01' + MOD(i,30),
-        DATE '2026-04-01' + MOD(i,30),
+        DATE '2026-04-02' + MOD(i,30),  -- FIXED (end > start)
         6 + MOD(i,5),
         CASE WHEN MOD(i,2)=0 THEN 'Day' ELSE 'Night' END,
         MOD(i,150)+1,
