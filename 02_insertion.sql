@@ -97,7 +97,7 @@ FOR i IN 1..30 LOOP
         i,
         SYSDATE - i,
         'Inspection Report ' || i,
-        MOD(i,2)+1,
+        MOD(i,3)+1,        -- FIXED (you have 3 admins)
         101 + MOD(i,5)
     );
 END LOOP;
