@@ -77,10 +77,13 @@ BEGIN
 FOR i IN 1..300 LOOP
     INSERT INTO Wage VALUES (
         i,
-        300 + MOD(i,200),
-        MOD(i,150),
-        300,
-        CASE WHEN MOD(i,3)=0 THEN 'Unpaid' ELSE 'Paid' END,
+        300 + MOD(i,200),           
+        MOD(i,150),                 
+        (300 + MOD(i,200)) - MOD(i,150),  
+        CASE 
+            WHEN (300 + MOD(i,200)) - MOD(i,150) = 0 THEN 'Paid'
+            ELSE 'Pending'
+        END,
         i
     );
 END LOOP;
