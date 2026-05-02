@@ -120,12 +120,16 @@ CREATE TABLE Wage (
 );
 
 -- AUDIT TABLE  
-CREATE TABLE Audit_log ( -- (couldn't name it as 'Audit' as that's a reserved keyword.)
+CREATE TABLE Audit_log (
     audit_id NUMBER PRIMARY KEY,
-    audit_date DATE,
+    audit_date DATE DEFAULT SYSDATE,
     remarks VARCHAR2(100),
     admin_id NUMBER,
     kiln_id NUMBER,
+    
+    CONSTRAINT fk_audit_admin 
     FOREIGN KEY (admin_id) REFERENCES Admin(admin_id),
+    
+    CONSTRAINT fk_audit_kiln 
     FOREIGN KEY (kiln_id) REFERENCES Kiln(kiln_id)
 );
