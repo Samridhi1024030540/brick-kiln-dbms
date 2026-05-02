@@ -74,13 +74,17 @@ CREATE TABLE Admin (
 -- CHILD TABLE
 CREATE TABLE Child (
     child_id NUMBER PRIMARY KEY,
-    child_name VARCHAR2(50),
-    age NUMBER,
+    child_name VARCHAR2(50) NOT NULL,
+    age NUMBER CHECK (age >= 0),
     class_last_attended VARCHAR2(20),
     school_name VARCHAR2(50),
     enrollment_status VARCHAR2(20),
     migrant_id NUMBER,
-    FOREIGN KEY (migrant_id) REFERENCES Migrant(migrant_id)
+    
+    CONSTRAINT fk_child_migrant 
+    FOREIGN KEY (migrant_id) 
+    REFERENCES Migrant(migrant_id)
+    ON DELETE CASCADE
 );
 
 -- SHIFT TABLE
