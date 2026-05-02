@@ -109,11 +109,13 @@ CREATE TABLE Shift (
 -- WAGE TABLE
 CREATE TABLE Wage (
     wage_id NUMBER PRIMARY KEY,
-    amount NUMBER,
-    advance_paid NUMBER,
+    amount NUMBER CHECK (amount >= 0),
+    advance_paid NUMBER DEFAULT 0 CHECK (advance_paid >= 0),
     balance_due NUMBER,
-    payment_status VARCHAR2(20),
+    payment_status VARCHAR2(20) CHECK (payment_status IN ('Pending','Paid')),
     shift_id NUMBER UNIQUE,
+    
+    CONSTRAINT fk_wage_shift 
     FOREIGN KEY (shift_id) REFERENCES Shift(shift_id)
 );
 
