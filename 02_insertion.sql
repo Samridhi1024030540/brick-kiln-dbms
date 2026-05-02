@@ -50,7 +50,7 @@ FOR i IN 1..120 LOOP
         TO_CHAR(1 + MOD(i,8)) || 'th',
         'Govt School ' || MOD(i,50),
         CASE WHEN MOD(i,4)=0 THEN 'Dropped' ELSE 'Enrolled' END,
-        i
+        MOD(i,150) + 1   -- FIXED
     );
 END LOOP;
 END;
