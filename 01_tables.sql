@@ -90,15 +90,21 @@ CREATE TABLE Child (
 -- SHIFT TABLE
 CREATE TABLE Shift (
     shift_id NUMBER PRIMARY KEY,
-    start_date DATE,
+    start_date DATE NOT NULL,
     end_date DATE,
-    hours_worked NUMBER,
+    hours_worked NUMBER CHECK (hours_worked >= 0),
     shift_type VARCHAR2(20),
     migrant_id NUMBER,
     kiln_id NUMBER,
+    
+    CONSTRAINT fk_shift_migrant 
     FOREIGN KEY (migrant_id) REFERENCES Migrant(migrant_id),
-    FOREIGN KEY (kiln_id) REFERENCES Kiln(kiln_id)
-);
+    
+    CONSTRAINT fk_shift_kiln 
+    FOREIGN KEY (kiln_id) REFERENCES Kiln(kiln_id),
+    
+    CONSTRAINT chk_dates CHECK (end_date >= start_date)
+); 
 
 -- WAGE TABLE
 CREATE TABLE Wage (
