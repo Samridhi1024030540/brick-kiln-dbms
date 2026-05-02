@@ -66,7 +66,7 @@ CREATE TABLE Kiln (
 -- ADMIN TABLE
 CREATE TABLE Admin (
     admin_id NUMBER PRIMARY KEY,
-    name VARCHAR2(50),
+    name VARCHAR2(50) NOT NULL,
     organization VARCHAR2(50),
     role VARCHAR2(30)
 );
