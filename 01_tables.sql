@@ -46,21 +46,21 @@ END;
 -- MIGRANT TABLE
 CREATE TABLE Migrant (
     migrant_id NUMBER PRIMARY KEY,
-    name VARCHAR2(50),
+    name VARCHAR2(50) NOT NULL,
     gender VARCHAR2(10),
     state VARCHAR2(30),
     home_district VARCHAR2(50),
-    aadhaar_no VARCHAR2(12) UNIQUE,
+    aadhaar_no VARCHAR2(12) UNIQUE NOT NULL,
     phone VARCHAR2(10),
-    registration_date DATE
+    registration_date DATE DEFAULT SYSDATE
 );
 
 -- KILN TABLE
 CREATE TABLE Kiln (
     kiln_id NUMBER PRIMARY KEY,
-    location VARCHAR2(50),
+    location VARCHAR2(50) NOT NULL,
     owner_name VARCHAR2(50),
-    min_wage NUMBER
+    min_wage NUMBER CHECK (min_wage > 0)
 );
 
 -- ADMIN TABLE
